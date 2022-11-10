@@ -1,3 +1,5 @@
+const form = document.querySelector('.form')
+
 const usersTable = [
   // Note: This is a fake table for educational purposes. Never store user credentials in plain text.
   { id: 1, username: "hello@world.com", password: "badpassword" },
@@ -15,12 +17,21 @@ let resetMessage = () => {
   document.getElementById("error-message").hidden = true;
 };
 
-addEventListener("submit", (event) => {
-  event.preventDefault();
+function checkValid(table, password) {
+  for (user of table) {
+    if (password === user.password) {return renderSuccess()}
+    else {renderError()}
+  }
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault()
   resetMessage();
 
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
+
+  checkValid(usersTable, password)
 
   console.log(`email submitted: ${email}`);
   console.log(`password submitted: ${password}`);
